@@ -1,10 +1,10 @@
 package com.example.librarymanagementsystem.repositories;
 
-import com.example.librarymanagementsystem.models.Book;
+import com.example.librarymanagementsystem.models.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Integer> {
+public interface StudentRepository extends JpaRepository<Student, Integer> {
 
 }

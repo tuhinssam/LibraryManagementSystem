@@ -1,7 +1,5 @@
 package com.example.librarymanagementsystem;
 
-import com.example.librarymanagementsystem.models.Book;
-import com.example.librarymanagementsystem.models.Genre;
 import com.example.librarymanagementsystem.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,10 +18,10 @@ public class LibraryManagementSystemApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Book book = Book.builder()
-				.name("Intro to Java")
-				.genre(Genre.TECHNOLOGY)
-				.build();
-		bookRepository.save(book);
+//		Book book = Book.builder()
+//				.name("Intro to Java")
+//				.genre(Genre.TECHNOLOGY)
+//				.build();
+//		bookRepository.save(book);
 	}
 }
