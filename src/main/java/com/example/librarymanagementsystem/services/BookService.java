@@ -2,6 +2,7 @@ package com.example.librarymanagementsystem.services;
 
 import com.example.librarymanagementsystem.models.Author;
 import com.example.librarymanagementsystem.models.Book;
+import com.example.librarymanagementsystem.models.Genre;
 import com.example.librarymanagementsystem.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class BookService {
             case "name":
                 return bookRepository.findByName(searchValue);
             case "genre":
-                return bookRepository.findByGenre(searchValue);
+                return bookRepository.findByGenre(Genre.valueOf(searchValue));
             case "author":
                 return bookRepository.findByAuthor(searchValue);
             default:
