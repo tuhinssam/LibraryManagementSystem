@@ -33,7 +33,7 @@ public class Transaction {
     @UpdateTimestamp
     private Date updatedOn;
 
-    private Double fine;
+    private Integer fine;
 
     @JoinColumn
     @ManyToOne

@@ -10,11 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TransactionService {
+
+    @Autowired
     TransactionRepository transactionRepository;
     @Autowired
     StudentService studentService;
@@ -80,6 +84,7 @@ public class TransactionService {
             transaction.setTransactionStatus(TransactionStatus.SUCCESS);
         }
         catch (Exception e) {
+            assert transaction != null;
             transaction.setTransactionStatus(TransactionStatus.FAILURE);
         }
         finally {
@@ -88,8 +93,59 @@ public class TransactionService {
         return transaction.getTransactionId();
     }
 
-    private  String returnBook(InitiateTransactionRequest transactionRequest) {
+    private  String returnBook(InitiateTransactionRequest transactionRequest) throws Exception {
         //TODO: Implement Return Book
-        return null;
+        List<Book> bookList = bookService.find("id", String.valueOf(transactionRequest.getBookId()));
+        Student student = studentService.find(transactionRequest.getStudentId());
+        Admin admin = adminService.find(transactionRequest.getAdminId());
+
+        Book book = (bookList != null && bookList.size() != 0) ? bookList.get(0) : null;
+        if(student == null
+                || book == null
+                || admin == null
+                || book.getStudent() == null
+                || book.getStudent().getId() != student.getId()) {
+            throw new Exception("Invalid Request");
+        }
+
+        // Getting the corresponding issuance txn
+        Transaction issuanceTransaction = transactionRepository.findTopByStudentAndBookAndTransactionTypeOrderByIdDesc(
+                student, book, TransactionType.ISSUE);
+        if(issuanceTransaction == null){
+            throw new Exception("Invalid request");
+        }
+
+        Transaction transaction = null;
+        try {
+            Integer fine  = calculateFine(issuanceTransaction.getCreatedOn());
+            transaction = Transaction.builder()
+                    .transactionId(UUID.randomUUID().toString())
+                    .student(student)
+                    .book(book)
+                    .admin(admin)
+                    .fine(fine)
+                    .transactionType(transactionRequest.getTransactionType())
+                    .transactionStatus(TransactionStatus.PENDING)
+                    .build();
+
+            if(fine == 0) {
+                book.setStudent(null);
+                bookService.createOrUpdate(book);
+                transaction.setTransactionStatus(TransactionStatus.SUCCESS);
+            }
+        } catch (Exception e) {
+            transaction.setTransactionStatus(TransactionStatus.FAILURE);
+        } finally {
+            transactionRepository.save(transaction);
+        }
+        return transaction.getTransactionId();
+    }
+
+    private int calculateFine(Date transactionIssueTime) {
+        long issueTimeInMillis = transactionIssueTime.getTime();
+        long currentTimeInMillis = System.currentTimeMillis();
+        long diff = currentTimeInMillis - issueTimeInMillis;
+        long daysSinceIssue = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        return daysSinceIssue > duration ? (int)(daysSinceIssue - duration) : 0;
     }
 }

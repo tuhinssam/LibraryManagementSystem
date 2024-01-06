@@ -14,7 +14,7 @@ public class TransactionController {
     TransactionService transactionService;
 
     @PostMapping("/transaction")
-    public void initiateTransaction(@RequestBody @Valid InitiateTransactionRequest transactionRequest) {
-        transactionService.initiateTransaction(transactionRequest);
+    public String initiateTransaction(@RequestBody @Valid InitiateTransactionRequest transactionRequest) throws Exception {
+        return transactionService.initiateTransaction(transactionRequest);
     }
 }
