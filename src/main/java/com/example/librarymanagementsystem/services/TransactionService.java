@@ -94,7 +94,6 @@ public class TransactionService {
     }
 
     private  String returnBook(InitiateTransactionRequest transactionRequest) throws Exception {
-        //TODO: Implement Return Book
         List<Book> bookList = bookService.find("id", String.valueOf(transactionRequest.getBookId()));
         Student student = studentService.find(transactionRequest.getStudentId());
         Admin admin = adminService.find(transactionRequest.getAdminId());
@@ -147,5 +146,20 @@ public class TransactionService {
         long diff = currentTimeInMillis - issueTimeInMillis;
         long daysSinceIssue = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         return daysSinceIssue > duration ? (int)(daysSinceIssue - duration) : 0;
+    }
+
+    public void payFine(String transactionId, Integer studentId, Integer amount) throws Exception {
+        Transaction returnTxn = transactionRepository.findByTransactionId(transactionId);
+
+        Book book = returnTxn.getBook();
+
+        if(returnTxn.getFine() == amount && book.getStudent() != null && book.getStudent().getId() == studentId){
+            returnTxn.setTransactionStatus(TransactionStatus.SUCCESS);
+            book.setStudent(null);
+            bookService.createOrUpdate(book);
+            transactionRepository.save(returnTxn);
+        }else{
+            throw new Exception("invalid request");
+        }
     }
 }

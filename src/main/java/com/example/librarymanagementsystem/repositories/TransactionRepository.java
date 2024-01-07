@@ -15,4 +15,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     //@Query("select * from transaction where student = ?1 and book = ?2 and transactionType = ?3 order by id desc limit 1")
     Transaction findTopByStudentAndBookAndTransactionTypeOrderByIdDesc(Student student, Book book, TransactionType transactionType);
 
+    //@Query("select * from Transaction where transactionId = ?1 ")
+    Transaction findByTransactionId(String transactionId);
 }
