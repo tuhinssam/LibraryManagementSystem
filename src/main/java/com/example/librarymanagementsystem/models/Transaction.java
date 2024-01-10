@@ -37,16 +37,17 @@ public class Transaction {
 
     @JoinColumn
     @ManyToOne
+    @JsonIgnoreProperties({"transactionList"})
     private Book book;
 
     @JoinColumn
     @ManyToOne
-    @JsonIgnoreProperties("transactionList")
+    @JsonIgnoreProperties({"transactionList"})
     private Student student;
 
     @JoinColumn
     @ManyToOne
-    @JsonIgnoreProperties("transactionList")
+    @JsonIgnoreProperties({"transactionList"})
     private Admin admin;
 
 }
