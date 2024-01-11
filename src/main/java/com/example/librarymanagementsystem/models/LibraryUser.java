@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystem.models;
 
 import com.example.librarymanagementsystem.utils.Constants;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +32,14 @@ public class LibraryUser implements UserDetails {
 
     @Column(nullable = false)
     private String authorities;
+
+    @OneToOne(mappedBy = "securedUser")
+    @JsonIgnoreProperties("securedUser")
+    private Student student;
+
+    @OneToOne(mappedBy = "securedUser")
+    @JsonIgnoreProperties("securedUser")
+    private Admin admin;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
