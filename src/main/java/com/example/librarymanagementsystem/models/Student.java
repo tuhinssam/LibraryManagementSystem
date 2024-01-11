@@ -40,4 +40,9 @@ public class Student {
     @JsonIgnoreProperties("student")
     @OneToMany(mappedBy = "student")
     private List<Transaction> transactionList;
+
+    @OneToOne
+    @JsonIgnoreProperties("student")
+    @JoinColumn
+    private LibraryUser securedUser;
 }

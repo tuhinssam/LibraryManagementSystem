@@ -1,17 +1,34 @@
 package com.example.librarymanagementsystem.services;
 
 import com.example.librarymanagementsystem.models.LibraryUser;
-import com.example.librarymanagementsystem.models.Student;
 import com.example.librarymanagementsystem.repositories.LibraryUserRepository;
+import com.example.librarymanagementsystem.utils.ResourceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LibraryUserService {
+public class LibraryUserService implements UserDetailsService {
     @Autowired
-    LibraryUserRepository libraryUserRepository;
+    LibraryUserRepository userRepository;
 
-    public void create(LibraryUser user) {
-        libraryUserRepository.save(user);
+    @Autowired
+    PasswordEncoder encoder;
+
+    @Override
+    public LibraryUser loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByusername(username);
+    }
+
+    public LibraryUser save(LibraryUser securedUser, String userType){
+
+        String encryptedPwd = encoder.encode(securedUser.getPassword());
+        String authorities = ResourceUtils.getAuthoritiesForUser().get(userType);
+
+        securedUser.setAuthorities(authorities);
+        securedUser.setPassword(encryptedPwd);
+        return this.userRepository.save(securedUser);
     }
 }

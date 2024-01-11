@@ -1,8 +1,10 @@
 package com.example.librarymanagementsystem;
 
+import com.example.librarymanagementsystem.models.Admin;
 import com.example.librarymanagementsystem.models.LibraryUser;
 import com.example.librarymanagementsystem.repositories.BookRepository;
 import com.example.librarymanagementsystem.repositories.LibraryUserRepository;
+import com.example.librarymanagementsystem.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +25,7 @@ public class LibraryManagementSystemApplication implements CommandLineRunner {
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
+	AdminService adminService;
 
 
 	public static void main(String[] args) {
