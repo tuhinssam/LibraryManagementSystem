@@ -1,7 +1,5 @@
 package com.example.librarymanagementsystem;
 
-import com.example.librarymanagementsystem.models.Admin;
-import com.example.librarymanagementsystem.models.LibraryUser;
 import com.example.librarymanagementsystem.repositories.BookRepository;
 import com.example.librarymanagementsystem.repositories.LibraryUserRepository;
 import com.example.librarymanagementsystem.services.AdminService;

@@ -4,6 +4,7 @@ import com.example.librarymanagementsystem.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Entity
 @Getter
 @Setter
@@ -34,11 +36,11 @@ public class LibraryUser implements UserDetails {
     private String authorities;
 
     @OneToOne(mappedBy = "securedUser")
-    @JsonIgnoreProperties("securedUser")
+    @JsonIgnoreProperties({"securedUser"})
     private Student student;
 
     @OneToOne(mappedBy = "securedUser")
-    @JsonIgnoreProperties("securedUser")
+    @JsonIgnoreProperties({"securedUser"})
     private Admin admin;
 
     @Override

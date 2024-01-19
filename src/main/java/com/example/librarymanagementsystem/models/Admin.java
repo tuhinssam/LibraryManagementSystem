@@ -33,6 +33,7 @@ public class Admin {
     private Date updatedOn;
 
     @OneToMany(mappedBy = "admin")
+    @JsonIgnoreProperties({"admin"})
     private List<Transaction> transactionList;
 
     @OneToOne
