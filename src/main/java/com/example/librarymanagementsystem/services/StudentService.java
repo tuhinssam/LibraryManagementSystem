@@ -2,18 +2,22 @@ package com.example.librarymanagementsystem.services;
 
 import com.example.librarymanagementsystem.models.LibraryUser;
 import com.example.librarymanagementsystem.models.Student;
+import com.example.librarymanagementsystem.repositories.StudentCacheRepository;
 import com.example.librarymanagementsystem.repositories.StudentRepository;
 import com.example.librarymanagementsystem.utils.Constants;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+@Slf4j
 @Service
 public class StudentService {
+
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    StudentCacheRepository studentCacheRepository;
 
     @Autowired
     LibraryUserService libraryUserService;
@@ -26,6 +30,17 @@ public class StudentService {
     }
 
     public Student find(int studentId) {
+        Student student = studentCacheRepository.get(studentId);
+        if(student != null) {
+            log.info(String.format("Student info: %s, %s, %s",student.getName(), student.getAge(), student.getEmail()));
+            return student;
+        }
+
+        student = studentRepository.findById(studentId).orElse(null);
+        if(student != null) {
+            log.info(student.toString());
+            studentCacheRepository.set(student);
+        }
         return studentRepository.findById(studentId).orElse(null);
     }
 }

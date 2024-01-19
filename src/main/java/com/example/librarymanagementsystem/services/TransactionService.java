@@ -2,9 +2,6 @@ package com.example.librarymanagementsystem.services;
 
 import com.example.librarymanagementsystem.dtos.InitiateTransactionRequest;
 import com.example.librarymanagementsystem.models.*;
-import com.example.librarymanagementsystem.repositories.AdminRepository;
-import com.example.librarymanagementsystem.repositories.BookRepository;
-import com.example.librarymanagementsystem.repositories.StudentRepository;
 import com.example.librarymanagementsystem.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -99,11 +97,12 @@ public class TransactionService {
         Admin admin = adminService.find(transactionRequest.getAdminId());
 
         Book book = (bookList != null && bookList.size() != 0) ? bookList.get(0) : null;
+
         if(student == null
                 || book == null
                 || admin == null
                 || book.getStudent() == null
-                || book.getStudent().getId() != student.getId()) {
+                || !Objects.equals(book.getStudent().getId(), student.getId())) {
             throw new Exception("Invalid Request");
         }
 
