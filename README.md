@@ -1,4 +1,6 @@
 Library Management using SB3 (Java17)
+- Hot Reload
+- Checkstyle
 - MySQL
 - JPA
 - Lombok

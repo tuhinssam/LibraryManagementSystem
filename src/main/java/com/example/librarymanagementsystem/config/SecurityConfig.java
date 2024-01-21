@@ -38,17 +38,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        .antMatchers(HttpMethod.GET, "/student/**").hasAuthority(Constants.STUDENT_SELF_INFO_AUTHORITY)
-//                .antMatchers(HttpMethod.GET, "/student-by-id/**").hasAuthority(Constants.STUDENT_INFO_AUTHORITY)
-//                .antMatchers(HttpMethod.POST, "/admin/**").hasAuthority(Constants.CREATE_ADMIN_AUTHORITY)
-//                .antMatchers(HttpMethod.GET, "/book/**").hasAuthority(Constants.READ_BOOK_AUTHORITY)
-//                .antMatchers(HttpMethod.POST, "/book/**").hasAuthority(Constants.CREATE_BOOK_AUTHORITY)
-//                .antMatchers("/transaction/payment/**").hasAuthority(Constants.MAKE_PAYMENT_AUTHORITY)
-//                .antMatchers("/transaction/**").hasAuthority(Constants.INITIATE_TRANSACTION_AUTHORITY)
-//                .antMatchers("/**").permitAll()
-//                .and()
-//                .formLogin();
-       return http.httpBasic().and()
+        return http.httpBasic().and()
                .csrf().disable()
                .authorizeHttpRequests().requestMatchers(HttpMethod.GET,"/student/**").hasAuthority(Constants.STUDENT_SELF_INFO_AUTHORITY)
                .and()

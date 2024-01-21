@@ -38,9 +38,9 @@ public class StudentService {
 
         student = studentRepository.findById(studentId).orElse(null);
         if(student != null) {
-            log.info(student.toString());
+            log.info(String.format("Student info: %s, %s, %s",student.getName(), student.getAge(), student.getEmail()));
             studentCacheRepository.set(student);
         }
-        return studentRepository.findById(studentId).orElse(null);
+        return student;
     }
 }

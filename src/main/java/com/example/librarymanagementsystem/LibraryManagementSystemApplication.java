@@ -1,5 +1,6 @@
 package com.example.librarymanagementsystem;
 
+import com.example.librarymanagementsystem.models.*;
 import com.example.librarymanagementsystem.repositories.BookRepository;
 import com.example.librarymanagementsystem.repositories.LibraryUserRepository;
 import com.example.librarymanagementsystem.services.AdminService;
@@ -15,13 +16,13 @@ public class LibraryManagementSystemApplication implements CommandLineRunner {
 
 	@Autowired
 	BookRepository bookRepository;
-
-	@Autowired
-	LibraryUserRepository libraryUserRepository;
-
-	@Autowired
-	PasswordEncoder passwordEncoder;
-
+//
+//	@Autowired
+//	LibraryUserRepository libraryUserRepository;
+//
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
+//
 	@Autowired
 	AdminService adminService;
 
@@ -32,11 +33,17 @@ public class LibraryManagementSystemApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		Book book = Book.builder()
-//				.name("Intro to Java")
-//				.genre(Genre.TECHNOLOGY)
-//				.build();
-//		bookRepository.save(book);
+
+//		Admin admin = Admin.builder()
+//				.name("admin")
+//				.email("admin@admin.com")
+//				.securedUser(
+//						LibraryUser.builder()
+//								.username("admin")
+//								.password("admin123")
+//								.build()
+//				).build();
+//		adminService.create(admin);
 //
 //		LibraryUser demoUser = LibraryUser.builder()
 //				.username("student")
