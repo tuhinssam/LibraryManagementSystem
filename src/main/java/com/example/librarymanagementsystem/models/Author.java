@@ -1,11 +1,13 @@
 package com.example.librarymanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.Reference;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Author {
+public class Author implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,5 +34,6 @@ public class Author {
     private Date updateOn;
 
     @OneToMany(mappedBy = "author")
+    @JsonIgnoreProperties({"author"})
     private List<Book> bookList;
 }

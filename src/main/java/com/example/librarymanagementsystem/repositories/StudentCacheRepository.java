@@ -14,8 +14,10 @@ public class StudentCacheRepository {
     RedisTemplate<String, Object> redisTemplate;
 
     public Student get(Integer studentId) {
+        log.info("Redis Key to get student: " + getKey(studentId));
         Object result = redisTemplate.opsForValue().get(getKey(studentId));
-        return result == null ? null : (Student) result;
+        if(result != null) log.info(((Student)result).getName());
+        return result != null ? (Student) result : null;
     }
 
     public void set(Student student) {
@@ -25,5 +27,4 @@ public class StudentCacheRepository {
     private String getKey(Integer studentId) {
         return Constants.STUDENT_CACHE_KEY_PREFIX + studentId;
     }
-
 }

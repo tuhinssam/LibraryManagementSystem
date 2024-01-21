@@ -21,7 +21,7 @@ public class StudentController {
 
     @PostMapping("/student")
     public void createStudent(@RequestBody CreateStudentRequest createStudentRequest) {
-         studentService.create(createStudentRequest.to());
+        studentService.create(createStudentRequest.to());
     }
 
     @GetMapping("/student-by-id/{id}")
@@ -40,7 +40,11 @@ public class StudentController {
     }
 
     @GetMapping("/student")
-    public Student findStudents(@RequestParam("id") int studentId) {
+    public Student findStudents() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LibraryUser libraryUser = (LibraryUser) authentication.getPrincipal();
+        int studentId = libraryUser.getStudent().getId();
+
         return studentService.find(studentId);
     }
 

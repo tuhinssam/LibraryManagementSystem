@@ -59,11 +59,11 @@ public class TransactionService {
         Admin admin = adminService.find(transactionRequest.getAdminId());
 
         Book book = (bookList != null && bookList.size() != 0) ? bookList.get(0) : null;
-        if(student == null
-                || book == null
-                || admin == null
-                || book.getStudent() != null
-                || student.getBookList().size() >= maxBookAllowed) {
+        if(book == null ||
+                admin == null ||
+                book.getStudent() != null ||
+                student.getBookList().size() >= maxBookAllowed)
+        {
             throw new Exception("Invalid Request");
         }
 

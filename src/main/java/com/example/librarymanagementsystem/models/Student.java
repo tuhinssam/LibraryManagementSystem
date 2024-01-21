@@ -34,17 +34,16 @@ public class Student implements Serializable {
     @UpdateTimestamp
     private Date updatedOn;
 
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"student"})
-    @OneToMany(mappedBy = "student")
     private List<Book> bookList;
 
-    @JsonIgnoreProperties({"student"})
     @OneToMany(mappedBy = "student")
+    @JsonIgnoreProperties("student")
     private List<Transaction> transactionList;
 
-
-    @JsonIgnoreProperties({"student"})
     @OneToOne
+    @JsonIgnoreProperties({"student"})
     @JoinColumn
     private LibraryUser securedUser;
 }

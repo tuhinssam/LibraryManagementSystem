@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -20,7 +21,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LibraryUser implements UserDetails {
+public class LibraryUser implements UserDetails, Serializable {
+    private static final long serialVersionUID = 6680729835367206953L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
